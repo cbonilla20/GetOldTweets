@@ -1,13 +1,13 @@
-package me.jhenrique.main;
+package me.cbonilla20.main;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-import me.jhenrique.manager.TweetManager;
-import me.jhenrique.manager.TwitterCriteria;
-import me.jhenrique.model.Tweet;
+import me.cbonilla20.manager.TweetManager;
+import me.cbonilla20.manager.TwitterCriteria;
+import me.cbonilla20.model.Tweet;
 
 public class Exporter {
 	
@@ -55,6 +55,7 @@ public class Exporter {
 				}
 			}
 			
+                        //process to a CSV
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter("output_got.csv"));
 				bw.write("username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink");

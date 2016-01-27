@@ -1,9 +1,10 @@
-package me.jhenrique.manager;
+package me.cbonilla20.manager;
 
 /**
  * A class to guide how the tweets must be searched on {@link TweetManager}
  * 
  * @author Jefferson Henrique
+ * @author César Bonilla
  *
  */
 public class TwitterCriteria {
@@ -15,6 +16,8 @@ public class TwitterCriteria {
 	private String until;
 	
 	private String querySearch;
+        
+        private String near;    
 	
 	private int maxTweets;
 	
@@ -64,6 +67,16 @@ public class TwitterCriteria {
 		this.querySearch = querySearch;
 		return this;
 	}
+        
+        /**
+	 * @param near (whitout @) Near for search with geolocation 
+	 * 
+	 * @return Current {@link TwitterCriteria}
+	 */
+	public TwitterCriteria setNear(String near) {
+		this.near = near;
+		return this;
+	}
 
 	/**
 	 * @param maxTweets The maximum number of tweets to retrieve
@@ -89,6 +102,10 @@ public class TwitterCriteria {
 	
 	String getQuerySearch() {
 		return querySearch;
+	}
+        
+	String getNear() {
+		return near;
 	}
 
 	int getMaxTweets() {

@@ -1,4 +1,4 @@
-package me.jhenrique.model;
+package me.cbonilla20.model;
 
 import java.util.Date;
 

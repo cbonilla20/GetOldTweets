@@ -1,4 +1,4 @@
-package me.jhenrique.manager;
+package me.cbonilla20.manager;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import me.jhenrique.model.Tweet;
+import me.cbonilla20.model.Tweet;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
  * Class to getting tweets based on username and optional time constraints
  * 
  * @author Jefferson Henrique
+ * @author César Bonilla
  */
 public class TweetManager {
 	
@@ -43,7 +44,7 @@ public class TweetManager {
 	 * @return JSON response used by Twitter to build its results
 	 * @throws Exception
 	 */
-	private static String getURLResponse(String username, String since, String until, String querySearch, String scrollCursor) throws Exception {
+	private static String getURLResponse(String username, String since, String until, String querySearch, String near, String scrollCursor) throws Exception {
 		String appendQuery = "";
 		if (username != null) {
 			appendQuery += "from:"+username;
@@ -57,7 +58,9 @@ public class TweetManager {
 		if (querySearch != null) {
 			appendQuery += " "+querySearch;
 		}
-		
+		if (near != null) {
+			appendQuery += " near:"+near;
+		}
 		String url = String.format("https://twitter.com/i/search/timeline?f=realtime&q=%s&src=typd&max_position=%s", URLEncoder.encode(appendQuery, "UTF-8"), scrollCursor);
 		
 		HttpGet httpGet = new HttpGet(url);
@@ -77,7 +80,7 @@ public class TweetManager {
 		try {
 			String refreshCursor = null;
 			outerLace: while (true) {
-				JSONObject json = new JSONObject(getURLResponse(criteria.getUsername(), criteria.getSince(), criteria.getUntil(), criteria.getQuerySearch(), refreshCursor));
+				JSONObject json = new JSONObject(getURLResponse(criteria.getUsername(), criteria.getSince(), criteria.getUntil(), criteria.getQuerySearch(), criteria.getNear(), refreshCursor));
 				refreshCursor = json.getString("min_position");
 				Document doc = Jsoup.parse((String) json.get("items_html"));
 				Elements tweets = doc.select("div.js-stream-tweet");

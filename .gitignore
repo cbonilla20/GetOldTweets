@@ -1,1 +1,4 @@
 *.classpath
+\target\
+/target/
+*.csv
